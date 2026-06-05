@@ -1612,6 +1612,7 @@ function getnumberraritiesplants()
 for i, n in pairs(raritiesdata) do
 table.insert(b,i)
 end	
+print(#b)
 end
 
 local sec2=Plant:AddSection({Name="Auto Harvest Trait"})
