@@ -186,7 +186,7 @@ function HubLibrary:CreateWindow(config)
 	})
 	AddCorner(ShadowFrame, 14)
 
-	local MainFrame = Create("Frame", {
+	local MainFrame = Create("ScrollingFrame", {
 		Name = "MainFrame",
 		Size = size,
 		Position = position,
