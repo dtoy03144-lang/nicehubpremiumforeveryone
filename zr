@@ -1597,7 +1597,7 @@ local ReduceLag=gui:AddTab({
 function getseed(seedname)
 	local Player = game:GetService("Players").LocalPlayer
 	local Backpack=Player.Backpack
-	if Backpack then
+	if Backpack and seeds2 then
 		for _, Tool in pairs(Backpack:GetChildren()) do
 			if string.find(Tool.Name,seeds2) and Tool:GetAttribute("Seed") then
 				return Tool	
