@@ -1505,6 +1505,7 @@ local Plant=gui:AddTab({
 	Name="Plant"
 })
 local seeds = require(game:GetService("ReplicatedStorage").Data.SeedData)
+local rarities=require(game:GetService("ReplicatedStorage").Modules.PlantTraitsData)
 function getanyseedsinthegame()
 	local names = {}
 	table.insert(names,"nothing")
@@ -1521,7 +1522,11 @@ local States = {
 			Boolen=true,
 			Description="Player Position"
 		},
-		AutoPlant=false
+		AutoPlant=false,
+		Harvest={
+			InstantHarvestByTraits=false
+
+		}
 	}
 }
 local Values={
@@ -1530,7 +1535,7 @@ local Values={
 	}
 }
 local vs={
-	
+
 }
 local r=sec1:AddDropdown({
 	Label="Seed",
@@ -1552,7 +1557,7 @@ local r2=sec1:AddDropdown({
 	Default=States.Plant.PlayerPosition.Description,
 	Callback=function(v)
 		if v==States.Plant.PlayerPosition.Description then
-			
+
 			States.Plant.PlayerPosition.Bolean=not States.Plant.PlayerPosition.Boolen
 		else
 			States.Plant.PlayerPosition.Bolean=false
@@ -1567,7 +1572,7 @@ local delay=  sec1:AddSlider({
 	Max=1,
 	Default=Values.Plant.Delay,
 	Callback=function(v)
-	Values.Plant.Delay=v		
+		Values.Plant.Delay=v		
 	end,
 })
 local AutoPlant=sec1:AddToggle({
@@ -1587,10 +1592,24 @@ for z,m in pairs(vs) do
 	end)
 end
 
+function getnumberraritiesplants()
+	local raritiesdata=rarities.Traits
+	local b={}
+for i, n in pairs(raritiesdata) do
+table.insert(b,i)
+end	
+end
 
-
-
-
+local sec2=Plant:AddSection({Name="Auto Harvest Trait"})
+local v1=sec2:AddDropdown({
+	Label="Select Trait",
+	Options=getnumberraritiesplants()
+	,
+	Default=States.Plant.Harvest.InstantHarvestByTraits,
+	Callback=function(v)
+		
+	end,
+})
 local ReduceLag=gui:AddTab({
 	Name="ReduceLag"
 })
@@ -1610,20 +1629,20 @@ function getseed(seedname)
 	end
 end
 while wait() do
-	
+
 	if States.Plant.AutoPlant==true then
-		
-if seeds2~="" and seeds2~="nothing" then
-local seed = getseed(seeds2)
-if seed.Parent~=game.Players.LocalPlayer.Character then
-	game.Players.LocalPlayer.Character.Humanoid:EquipTool(seed)
-wait(0.1)	
-	end
-if States.Plant.PlayerPosition.Boolen then
-print(55)
+
+		if seeds2~="" and seeds2~="nothing" then
+			local seed = getseed(seeds2)
+			if seed.Parent~=game.Players.LocalPlayer.Character then
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(seed)
+				wait(0.1)	
+			end
+			if States.Plant.PlayerPosition.Boolen then
+				print(55)
 				game:GetService("ReplicatedStorage").GameEvents.Plant_RE:FireServer(game.Players.LocalPlayer.Character.HumanoidRootPart.Position,seeds2)
+			end
+			wait(0.2)
 		end
-wait(0.2)
-end
 	end
 end
