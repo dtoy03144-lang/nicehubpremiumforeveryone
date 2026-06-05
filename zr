@@ -550,22 +550,22 @@ function HubLibrary:CreateWindow(config)
 			TextXAlignment = Enum.TextXAlignment.Left,
 			Parent = TabBtn,
 		})
-
 		local TabPage = Create("ScrollingFrame", {
 			Name = tabName .. "Page",
 			Size = UDim2.new(1, -20, 1, -56),
 			Position = UDim2.new(0, 10, 0, 48),
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			ScrollBarThickness = 3,
+			ScrollBarThickness = 4,
 			ScrollBarImageColor3 = Theme.Accent,
-			CanvasSize = UDim2.new(0, 0, 0, 0),
 			AutomaticCanvasSize = Enum.AutomaticSize.Y,
+			CanvasSize = UDim2.new(0, 0, 0, 0),
 			Visible = false,
 			Parent = ContentArea,
 		})
+
 		AddListLayout(TabPage, 6)
-		AddPadding(TabPage, 6, 0, 6, 0)
+		AddPadding(TabPage, 8, 8, 8, 8)
 
 		local Tab = {
 			Button   = TabBtn,
@@ -614,6 +614,7 @@ function HubLibrary:CreateWindow(config)
 			cfg = cfg or {}
 			local sName = cfg.Name or "Section"
 
+			-- Section נשאר Frame רגיל + AutomaticSize (זה עובד הכי טוב)
 			local SectionFrame = Create("Frame", {
 				Name = sName .. "Section",
 				Size = UDim2.new(1, 0, 0, 0),
@@ -622,6 +623,7 @@ function HubLibrary:CreateWindow(config)
 				BorderSizePixel = 0,
 				Parent = TabPage,
 			})
+
 			AddCorner(SectionFrame, 8)
 			AddStroke(SectionFrame, Theme.Border, 1)
 			AddPadding(SectionFrame, 10, 10, 10, 10)
@@ -631,7 +633,6 @@ function HubLibrary:CreateWindow(config)
 				Name = "Header",
 				Size = UDim2.new(1, 0, 0, 22),
 				BackgroundTransparency = 1,
-				LayoutOrder = 0,
 				Parent = SectionFrame,
 			})
 
@@ -655,7 +656,6 @@ function HubLibrary:CreateWindow(config)
 			})
 
 			local Section = { Frame = SectionFrame }
-
 			function Section:AddButton(cfg)
 				cfg = cfg or {}
 				local bLabel    = cfg.Label or "Button"
