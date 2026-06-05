@@ -557,13 +557,14 @@ function HubLibrary:CreateWindow(config)
 			Position = UDim2.new(0, 10, 0, 48),
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			ScrollBarThickness = 3,
+			ScrollBarThickness = 4,
 			ScrollBarImageColor3 = Theme.Accent,
-			CanvasSize = UDim2.new(0, 0, 0, 0),
 			AutomaticCanvasSize = Enum.AutomaticSize.Y,
+			CanvasSize = UDim2.new(0, 0, 0, 0),
 			Visible = false,
 			Parent = ContentArea,
 		})
+
 		AddListLayout(TabPage, 6)
 		AddPadding(TabPage, 6, 0, 6, 0)
 
@@ -609,20 +610,23 @@ function HubLibrary:CreateWindow(config)
 				end
 			end
 		end)
-
 		function Tab:AddSection(cfg)
 			cfg = cfg or {}
 			local sName = cfg.Name or "Section"
 
-			local SectionFrame = Create("Frame", {
+			local SectionFrame = Create("ScrollingFrame", {
 				Name = sName .. "Section",
 				Size = UDim2.new(1, 0, 0, 0),
-				AutomaticSize = Enum.AutomaticSize.Y,
-				BackgroundColor3 = Theme.Surface,
+				AutomaticCanvasSize = Enum.AutomaticSize.Y,
+				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
+				ScrollBarThickness = 3,
+				ScrollBarImageColor3 = Theme.Accent,
+				CanvasSize = UDim2.new(0, 0, 0, 0),
 				Parent = TabPage,
 			})
-			AddCorner(SectionFrame, 8)
+
+			AddCorner(SectionFrame, 8)  -- אם אתה רוצה פינות גם על הסקשן
 			AddStroke(SectionFrame, Theme.Border, 1)
 			AddPadding(SectionFrame, 10, 10, 10, 10)
 			AddListLayout(SectionFrame, 6)
@@ -655,7 +659,6 @@ function HubLibrary:CreateWindow(config)
 			})
 
 			local Section = { Frame = SectionFrame }
-
 			function Section:AddButton(cfg)
 				cfg = cfg or {}
 				local bLabel    = cfg.Label or "Button"
