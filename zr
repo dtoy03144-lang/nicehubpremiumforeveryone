@@ -186,7 +186,7 @@ function HubLibrary:CreateWindow(config)
 	})
 	AddCorner(ShadowFrame, 14)
 
-	local MainFrame = Create("ScrollingFrame", {
+	local MainFrame = Create("Frame", {
 		Name = "MainFrame",
 		Size = size,
 		Position = position,
@@ -276,7 +276,7 @@ function HubLibrary:CreateWindow(config)
 		Size = UDim2.new(0, 28, 0, 28),
 		Position = UDim2.new(1, -38, 0.5, -14),
 		BackgroundColor3 = Theme.SurfaceAlt,
-		Text = "✕",
+		Text = "X",
 		TextColor3 = Theme.TextSecondary,
 		TextSize = 12,
 		Font = Fonts.Body,
@@ -561,12 +561,22 @@ function HubLibrary:CreateWindow(config)
 			ScrollBarImageColor3 = Theme.Accent,
 			CanvasSize = UDim2.new(0, 0, 0, 0),
 			AutomaticCanvasSize = Enum.AutomaticSize.Y,
+			ScrollingDirection = Enum.ScrollingDirection.Y,
 			Visible = false,
 			Parent = ContentArea,
 		})
-		AddListLayout(TabPage, 6)
+	--	AddListLayout(TabPage, 6)
 		AddPadding(TabPage, 6, 0, 6, 0)
+	--	local layout = TabPage:FindFirstChildOfClass("UIListLayout")
+		local layout = Instance.new("UIListLayout")
+		layout.Padding = UDim.new(0, 6)
+		layout.Parent = TabPage
 
+		layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+			TabPage.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 12)
+		end)
+		
+		
 		local Tab = {
 			Button   = TabBtn,
 			Page     = TabPage,
@@ -616,7 +626,7 @@ function HubLibrary:CreateWindow(config)
 
 			local SectionFrame = Create("Frame", {
 				Name = sName .. "Section",
-				Size = UDim2.new(1, 0, 0, 0),
+				Size = UDim2.new(1, 0, 0, 50),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				BackgroundColor3 = Theme.Surface,
 				BorderSizePixel = 0,
@@ -626,7 +636,11 @@ function HubLibrary:CreateWindow(config)
 			AddStroke(SectionFrame, Theme.Border, 1)
 			AddPadding(SectionFrame, 10, 10, 10, 10)
 			AddListLayout(SectionFrame, 6)
+			local SectionLayout = SectionFrame:FindFirstChildOfClass("UIListLayout")
 
+			SectionLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+				SectionFrame.Size = UDim2.new(1, 0, 0, SectionLayout.AbsoluteContentSize.Y + 20)
+			end)
 			local SectionHeader = Create("Frame", {
 				Name = "Header",
 				Size = UDim2.new(1, 0, 0, 22),
