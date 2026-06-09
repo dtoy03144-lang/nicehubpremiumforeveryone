@@ -1,3 +1,6 @@
+
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/dtoy03144-lang/nicehubpremiumforeveryone/refs/heads/main/zr"))()
+
 local ReplicationReciever = require(game.ReplicatedStorage.Modules.ReplicationReciever)
 local v1 = ReplicationReciever.new("Booths")   
 
@@ -22,7 +25,8 @@ end
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local PetRegistry = require(ReplicatedStorage.Data.PetRegistry)
 function Kg(r)
-	return string.split(r,"[")[2]
+	local g=string.split(r,"[")[2]
+	return string.sub(g,1,string.len(g)-1)
 end
 local function GetPetName(petId)
 	if not petId then return "Unknown" end
