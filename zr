@@ -21,7 +21,9 @@ local function GetBoothListings(boothId)
 end
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local PetRegistry = require(ReplicatedStorage.Data.PetRegistry)
-
+function Kg(r)
+	return string.split(r,"[")[2]
+end
 local function GetPetName(petId)
 	if not petId then return "Unknown" end
 	local petData = PetRegistry.PetList[petId]
@@ -41,7 +43,7 @@ for _, DataName in pairs(workspace.TradeWorld.Booths:GetChildren()) do
 					if m:GetAttribute("PET_UUID") then
 						for k,l in pairs(Data) do
 							if m:GetAttribute("PET_UUID")==l["ItemId"] then
-								table.insert(detection,{PetNameClean=m:GetAttribute("f"),Price=l["Price"],Id=l["ItemId"],PetName=m.Name})	
+								table.insert(detection,{PetNameClean=m:GetAttribute("f"),Price=l["Price"],Id=l["ItemId"],PetName=m.Name,Kg2=Kg(m.Name)})	
 							end
 						end
 					end
